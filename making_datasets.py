@@ -60,12 +60,13 @@ while True:
         desired=list(map(lambda a: a.rstrip(),desired))
         desired=list(map(lambda a: a.replace(" ",'_'),desired))
         n_images=int(input('how many images do you want?'))
-        for wsearch in desired: 
+        for wsearch in desired:  
             current_dic= os.path.join(directory,wsearch.lower())
             if not os.path.exists(current_dic): 
                 os.makedirs(current_dic)  
             if len(os.listdir(current_dic)) == n_images: 
                 continue  
+            wsearch=wsearch.replace("_"," ")
             search_url=getdata(GOOGLE_IMAGE + 'q=' +wsearch)
             amount_of_times=math.ceil(n_images/20.0) 
             if amount_of_times > 26: 
@@ -108,6 +109,7 @@ while True:
                 os.makedirs(current_dic)  
             if len(os.listdir(current_dic)) == n_images: 
                 continue  
+            wsearch=wsearch.replace("_"," ")
             search_url=getdata(GOOGLE_IMAGE + 'q=' +wsearch)
             amount_of_times=math.ceil(n_images/20.0) 
             if amount_of_times > 26: 
