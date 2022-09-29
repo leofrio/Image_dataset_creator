@@ -149,7 +149,7 @@ while True:
         if not os.path.exists(directory): 
             os.makedirs(directory)
             print('Directory %s at path %s was just created!' % (ds_name,directory))
-        print("directory changed to %s at path %s" % (ds_name,directory)) 
+        print("directory changed to %s at path %s " % (ds_name,directory)) 
     elif action == '5': 
         break; 
 
