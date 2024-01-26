@@ -8,8 +8,10 @@ import re
 import shutil
 import urllib.request 
 import math 
-import string as String
-olddirectory="datasets"
+import string as String  
+olddirectory=os.path.dirname(os.path.realpath(__file__)) + '/datasets'
+print('this is the directory current')
+print(olddirectory)
 ds_name=input("choose the name of the new dataset you are creating/want to use \n")
 directory=os.path.join(olddirectory,ds_name)
 print(directory)
@@ -151,7 +153,34 @@ while True:
         if not os.path.exists(directory): 
             os.makedirs(directory)
             print('Directory %s at path %s was just created!' % (ds_name,directory))
-        print("directory changed to %s at path %s " % (ds_name,directory)) 
+        print("directory changed to %s at path %s " % (ds_name,directory))  
+    elif action == '4':
+        if len(os.listdir(directory)) == 0:
+            print('No subfolders available in the current dataset.')
+            continue
+
+        # Find the subfolder with the least number of images
+        min_images_folder = min(os.listdir(directory), key=lambda subfolder: len(os.listdir(os.path.join(directory, subfolder))))
+
+        # Get the number of images in the subfolder with the least images
+        min_images_count = len(os.listdir(os.path.join(directory, min_images_folder)))
+
+        # Set all other subfolders to have the same number of images
+        for subfolder in os.listdir(directory):
+            if subfolder != min_images_folder:
+                current_subfolder = os.path.join(directory, subfolder)
+
+                # Get the current number of images in the subfolder
+                current_images_count = len(os.listdir(current_subfolder))
+
+                # Remove excess images
+                if current_images_count > min_images_count:
+                    excess_images = current_images_count - min_images_count
+                    for i in range(excess_images):
+                        os.remove(os.path.join(current_subfolder, os.listdir(current_subfolder)[i]))
+
+        print('All subfolders now have the same number of images as the one with the least images (%d).' % min_images_count)
     elif action == '5': 
-        break; 
+        break;  
+
 
